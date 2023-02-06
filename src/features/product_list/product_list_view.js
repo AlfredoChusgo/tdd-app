@@ -15,8 +15,43 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import Snackbar from '@mui/material/Snackbar';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
+
 
 function ProductListView() {
+    const [open, setOpen] = React.useState(false);
+
+      const handleCheckout = () => {
+    setOpen(true);
+  };
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpen(false);
+  };
+
+  const action = (
+    <React.Fragment>
+      <Button color="secondary" size="small" onClick={handleClose}>
+        UNDO
+      </Button>
+      <IconButton
+        size="small"
+        aria-label="close"
+        color="inherit"
+        onClick={handleClose}
+      >
+        <CloseIcon fontSize="small" />
+      </IconButton>
+    </React.Fragment>
+  );
+
     const dispatch = useDispatch();
     const { productList, shoppingCart } = useSelector(selectProductListState);
     const productListItems = productList.map(e =>
@@ -36,7 +71,7 @@ function ProductListView() {
                 </Typography>
             </CardContent>
             <CardActions>
-                <Button size="small" onClick={() => dispatch(addProductToCart(e.id))}>Add to Cart</Button>
+                <Button size="small" onClick={() => dispatch(addProductToCart(e.id))}><ShoppingCartIcon></ShoppingCartIcon>Add to Cart</Button>
             </CardActions>
         </Card>
     );
@@ -72,8 +107,15 @@ function ProductListView() {
                             </Typography>
                             {shoppingCartItems} 
                             <Typography variant="h6" gutterBottom>
-                                Total : {totalAmount} $ <Button variant="outlined" size="medium" >Checkout</Button>
+                                Total : {totalAmount} $ <Button variant="outlined" size="medium" onClick={handleCheckout}>Checkout</Button>
                             </Typography>
+                            <Snackbar
+                                open={open}
+                                autoHideDuration={6000}
+                                onClose={handleClose}
+                                message="Thanks for paying "
+                                action={action}
+                            />
                         </Grid>
                     </Grid>
                 </Box>
