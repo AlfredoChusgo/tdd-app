@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import TextField from '@mui/material/TextField';
-
+import RemoveIcon from '@mui/icons-material/Remove';
 import Grid from '@mui/material/Grid';
 import productListReducer, {addProductToCart, removeProductFromCart} from './product_list_slice';
 import {selectProductListState,selectShoppingCartState } from '../product_list/product_list_slice';
@@ -42,20 +42,17 @@ function ProductListView() {
     );
     const shoppingCartItems = shoppingCart.map(e =>
         <Card sx={{ maxWidth: 345 }} key={e.id}>
-            {/* <CardMedia
-            component="img"
-            alt="green iguana"
-            height="140"
-            image={e.imageUrl}
-          /> */}
             <CardContent>
                 <Typography gutterBottom variant="h5" component="div">
                     {e.name}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
-                    Price : {e.price}$ x Count : {e.count}
+                    Price : {e.price}$ x Count : {e.count} <Button size="small" variant="outlined" onClick={() => dispatch(removeProductFromCart(e.id))}> <RemoveIcon/></Button>
                 </Typography>
             </CardContent>
+            <CardActions>
+                
+            </CardActions>
         </Card>);
     const totalAmount = shoppingCart.reduce((accumulator,currentValue)=> accumulator + (currentValue.price*currentValue.count),0);
     return (
@@ -75,7 +72,7 @@ function ProductListView() {
                             </Typography>
                             {shoppingCartItems} 
                             <Typography variant="h6" gutterBottom>
-                                Total : {totalAmount}
+                                Total : {totalAmount} $ <Button variant="outlined" size="medium" >Checkout</Button>
                             </Typography>
                         </Grid>
                     </Grid>

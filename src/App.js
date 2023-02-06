@@ -10,6 +10,9 @@ import authReducer, {login,logout} from './features/auth/auth_slice';
 import Grid from '@mui/material/Grid';
 import { Button } from '@mui/material';
 import ProductListView from './features/product_list/product_list_view';
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+
 function App() {
   const dispatch = useDispatch();
   const { isAuthenticated, username } = useSelector(selectAuthState);
@@ -19,12 +22,16 @@ function App() {
     );
   } else {
     return (<Grid>
-      <Typography variant="h2" gutterBottom>
-      Authenticated ! Hello {username};
-    </Typography>
-    <Button variant="outlined" onClick={()=>dispatch(logout())}>Log out</Button> 
+      <AppBar position="static">
+        <Toolbar>
+          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+            Humble Shopping cart
+          </Typography>
+          <Button color="inherit"onClick={()=>dispatch(logout())} >Hello {username} - Logout</Button>
+        </Toolbar>
+      </AppBar>
     <ProductListView></ProductListView>
-    </Grid>); /* todo move to toolbar */
+    </Grid>);
   }
 
 }

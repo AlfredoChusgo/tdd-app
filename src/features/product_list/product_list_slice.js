@@ -21,12 +21,12 @@ export const productListSlice = createSlice({
         }
     },
     removeProductFromCart:(state,action)=>{
-        let productId = action.payload.id;
+        let productId = action.payload;
         let productInCart = state.shoppingCart.filter(e=>e.id == productId);
-        if(productInCart.length == 1){
+        if(productInCart.length == 1 && productInCart[0].count == 1){
             state.shoppingCart = state.shoppingCart.filter(e=>e.id != productId);
         }else{
-            productInCart.count--;            
+            productInCart[0].count--;            
         }
     }
   }
