@@ -9,7 +9,7 @@ import Typography from '@mui/material/Typography';
 import authReducer, {login,logout} from './features/auth/auth_slice';
 import Grid from '@mui/material/Grid';
 import { Button } from '@mui/material';
-
+import ProductListView from './features/product_list/product_list_view';
 function App() {
   const dispatch = useDispatch();
   const { isAuthenticated, username } = useSelector(selectAuthState);
@@ -22,8 +22,9 @@ function App() {
       <Typography variant="h2" gutterBottom>
       Authenticated ! Hello {username};
     </Typography>
-    <Button variant="outlined" onClick={()=>dispatch(logout())}>Log out</Button>
-    </Grid>);
+    <Button variant="outlined" onClick={()=>dispatch(logout())}>Log out</Button> 
+    <ProductListView></ProductListView>
+    </Grid>); /* todo move to toolbar */
   }
 
 }
